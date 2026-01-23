@@ -19,7 +19,7 @@
 
 struct TwoSat {
 	int N;
-	vector<vi> gr;
+	vector<basic_string<int>> gr;
 	vi values; // 0 = false, 1 = true
 
 	TwoSat(int n = 0) : N(n), gr(2*n) {}
@@ -51,23 +51,23 @@ struct TwoSat {
 		either(cur, ~li[1]);
 	}
 
-	vi val, comp, z; int time = 0;
+	vi v, comp, z; int time = 0;
 	int dfs(int i) {
-		int low = val[i] = ++time, x; z.push_back(i);
+		int low = v[i] = ++time, x; z.push_back(i);
 		for(int e : gr[i]) if (!comp[e])
-			low = min(low, val[e] ?: dfs(e));
-		if (low == val[i]) do {
+			low = min(low, v[e] ?: dfs(e));
+		if (low == v[i]) do {
 			x = z.back(); z.pop_back();
 			comp[x] = low;
 			if (values[x>>1] == -1)
 				values[x>>1] = x&1;
 		} while (x != i);
-		return val[i] = low;
+		return v[i] = low;
 	}
 
 	bool solve() {
 		values.assign(N, -1);
-		val.assign(2*N, 0); comp = val;
+		v.assign(2*N, 0); comp = v;
 		rep(i,0,2*N) if (!comp[i]) dfs(i);
 		rep(i,0,N) if (comp[2*i] == comp[2*i+1]) return 0;
 		return 1;
