@@ -1,14 +1,12 @@
 /**
- * Author: Thomas Meeks
- * Date: 2026-O2-6
+ * Author: Andy Phan
+ * Date: 2026-02-06
  * License: CC0
  * Source: Andy Phan/Atcoder
  * Description: Maximum r such that g(query(l, r)). Note query is [)
- * Usage: LazySegTree.max_right(l, [&](ll v)->bool { return v<x; });
- * would return the first index such that v>=x in a max LazySegtree.
- * Time: O(\log N).
+ * Add to LazySegmentTree structure
+ * Time: $O(\log N)$.
  */
-
 int max_right(int l, auto g) {
     if (l == N) return N;
     assert(g(idem)); l += S;
