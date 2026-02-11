@@ -4,9 +4,9 @@
  * self edges not allowed
  * adj[u] += {v, i};
  * adj[v] += {u, i};
- * iscut[v] = 1 iff cut node
- * bccid[edge id] = id, 0<=id<numbccs
- * returns {numbccs, bccid, iscut}
+ * is_cut[v] = 1 iff cut node
+ * bcc_id[edge id] = id, 0<=id<num_bccs
+ * returns {num_bccs, bcc_id, is_cut}
  * Assumes the root node points to itself.
  * Time: $O(n+m)$
  * Memory: $O(n+m)$

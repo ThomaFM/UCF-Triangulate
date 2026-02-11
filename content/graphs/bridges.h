@@ -3,9 +3,9 @@
  * Description: bridges
  * adj[u] += {v, i};
  * adj[v] += {u, i};
- * iscut[v] = 1 iff cut node
- * brid[v] = id, 0<=id<numbccs
- * returns {numbccs, bccid, iscut}
+ * is_br[edge id] = 1 iff bridge edge
+ * br_id[v] = id, 0<=id<num_ccs
+ * returns {num_ccs, br_id, is_br}
  * Assumes the root node points to itself.
  */
 #pragma once
