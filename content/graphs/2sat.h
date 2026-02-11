@@ -24,12 +24,6 @@ struct TwoSat {
 
 	TwoSat(int n = 0) : N(n), gr(2*n) {}
 
-	int addVar() { // (optional)
-		gr.emplace_back();
-		gr.emplace_back();
-		return N++;
-	}
-
 	void either(int f, int j) {
 		f = max(2*f, -1-2*f);
 		j = max(2*j, -1-2*j);
@@ -37,19 +31,6 @@ struct TwoSat {
 		gr[j].push_back(f^1);
 	}
 	void setValue(int x) { either(x, x); }
-
-	void atMostOne(const vi& li) { // (optional)
-		if (sz(li) <= 1) return;
-		int cur = ~li[0];
-		rep(i,2,sz(li)) {
-			int next = addVar();
-			either(cur, ~li[i]);
-			either(cur, next);
-			either(~li[i], next);
-			cur = ~next;
-		}
-		either(cur, ~li[1]);
-	}
 
 	vi v, comp, z; int time = 0;
 	int dfs(int i) {
@@ -71,5 +52,24 @@ struct TwoSat {
 		rep(i,0,2*N) if (!comp[i]) dfs(i);
 		rep(i,0,N) if (comp[2*i] == comp[2*i+1]) return 0;
 		return 1;
+	}
+
+	int addVar() { // (optional)
+		gr.emplace_back();
+		gr.emplace_back();
+		return N++;
+	}
+
+	void atMostOne(const vi& li) { // (optional)
+		if (sz(li) <= 1) return;
+		int cur = ~li[0];
+		rep(i,2,sz(li)) {
+			int next = addVar();
+			either(cur, ~li[i]);
+			either(cur, next);
+			either(~li[i], next);
+			cur = ~next;
+		}
+		either(cur, ~li[1]);
 	}
 };
