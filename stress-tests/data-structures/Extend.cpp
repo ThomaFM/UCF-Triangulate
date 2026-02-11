@@ -61,8 +61,7 @@ struct lazy_segtree {
 			if (i > zr) pull((r - 1) >> i);
 		}
 	}
-#include "../../content/data-structures/MinLeft.h"
-#include "../../content/data-structures/MaxRight.h"
+#include "../../content/data-structures/Extend.h"
 
 };
 
@@ -97,6 +96,10 @@ struct lazy_segtree2 {
 			if (g(query(l, r))) return r;
 		}
 		assert(0);
+	}
+	int extend(int p, bool left, auto g) {
+		if (left) return min_left(p, g);
+		else return max_right(p, g);
 	}
 };
 
@@ -137,15 +140,15 @@ int main() {
 			else if (t == 3) {
 				int r = rng() % (initVals.size() + 1);
 				int v = rng() % 50;
-				int l1 = tree.min_left(r, [&](T t) { return t.first <= v; });
-				int l2 = tree2.min_left(r, [&](T t) { return t.first <= v; });
+				int l1 = tree.extend(r, true, [&](T t) { return t.first <= v; });
+				int l2 = tree2.extend(r, true, [&](T t) { return t.first <= v; });
 				assert(l1 == l2);
 			}
 			else if (t == 4) {
 				int l = rng() % (initVals.size() + 1);
 				int v = rng() % 50;
-				int r1 = tree.max_right(l, [&](T t) { return t.first <= v; });
-				int r2 = tree2.max_right(l, [&](T t) { return t.first <= v; });
+				int r1 = tree.extend(l, false, [&](T t) { return t.first <= v; });
+				int r2 = tree2.extend(l, false, [&](T t) { return t.first <= v; });
 				assert(r1 == r2);
 			}
 		}
