@@ -20,9 +20,8 @@ struct lazy_segtree {
 	T op(T left, T right) { /*modify*/ }
 	T applyLazy(T val, F lazy) { /*modify*/ }
 	F combLazy(F old, F nw) { /*modify*/ } 
-	lazy_segtree(const vector<T>& v):
-		N(sz(v)), log(__lg(2 * N - 1)), S(1 << log), d(2 * S, idem),
-		lz(S, defLazy) {
+	lazy_segtree(const vector<T>& v): N(sz(v)), log(__lg(2 * N
+			- 1)), S(1 << log), d(2 * S, idem), lz(S, defLazy) {
 		for (int i = 0; i < N; i++) d[S + i] = v[i];
 		for (int i = S - 1; i >= 1; i--) pull(i);
 	}
