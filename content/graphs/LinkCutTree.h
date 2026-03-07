@@ -1,7 +1,7 @@
 /**
  * Author: Lucian Bicsi (bicsi)
  * Source: https://codeforces.com/blog/entry/75885
- * Description: Represents a forest of unrooted trees. Nodes are 1-indexed.
+ * Description: Represents a forest of unrooted trees. Nodes are 0-indexed.
  * You can add and remove edges (as long as the result is still a forest).
  * You can also do path sum, subtree sum, and LCA queries, which depend on the current root.
  * Time: All operations take amortized O(\log N).
