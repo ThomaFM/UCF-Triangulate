@@ -4,46 +4,52 @@
  * License: CC0
  * Description: Solves $A * x = b$. If there are multiple solutions, an arbitrary one is returned.
  *  Returns rank, or -1 if no solutions. Data in $A$ and $b$ is lost.
+ * Written to be modified easily to work precisely with doubles
+ * Just remove/adjust commented lines and remove mods.
  * Time: O(n^2 m)
  * Status: tested on kattis:equationsolver, and bruteforce-tested mod 3 and 5 for n,m <= 3
  */
 #pragma once
-
-typedef vector<double> vd;
 const double eps = 1e-12;
-
-int solveLinear(vector<vd>& A, vd& b, vd& x) {
+template<class T>
+int solveLinear(vector<vector<T>>& A, 
+    vector<T>& b, vector<T>& x) {
 	int n = sz(A), m = sz(x), rank = 0, br, bc;
-	if (n) assert(sz(A[0]) == m);
+	if (n) assert(sz(A[0]) == m); 
 	vi col(m); iota(all(col), 0);
-
 	rep(i,0,n) {
-		double v, bv = 0;
+		T v, bv = 0;
 		rep(r,i,n) rep(c,i,m)
-			if ((v = fabs(A[r][c])) > bv)
+			if ((v = std::abs(A[r][c])) > bv)
 				br = r, bc = c, bv = v;
-		if (bv <= eps) {
-			rep(j,i,n) if (fabs(b[j]) > eps) return -1;
+		if (bv <= T(eps)) {
+			rep(j,i,n) if(std::abs(b[j]) > T(eps)) return -1;
 			break;
 		}
 		swap(A[i], A[br]);
 		swap(b[i], b[br]);
 		swap(col[i], col[bc]);
 		rep(j,0,n) swap(A[j][i], A[j][bc]);
-		bv = 1/A[i][i];
+		bv = modpow(A[i][i],mod-2); //bv = T(1)/A[i][i];
 		rep(j,i+1,n) {
-			double fac = A[j][i] * bv;
-			b[j] -= fac * b[i];
-			rep(k,i+1,m) A[j][k] -= fac*A[i][k];
+			T fac = (A[j][i] * bv) % mod;
+			b[j] -= (fac * b[i])%mod;
+            if(b[j]<0) b[j]+=mod; //remove line
+			rep(k,i+1,m){
+                A[j][k] -= (fac*A[i][k])%mod;
+                if(A[j][k]<0) A[j][k]+=mod; //remove line
+            }
 		}
 		rank++;
 	}
-
 	x.assign(m, 0);
-	for (int i = rank; i--;) {
-		b[i] /= A[i][i];
+	for (int i = rank; i--;) { //b[i]/=A[i][i] below
+		b[i] = (b[i] * modpow(A[i][i],mod-2))%mod; 
 		x[col[i]] = b[i];
-		rep(j,0,i) b[j] -= A[j][i] * b[i];
+		rep(j,0,i){
+            b[j] -= (A[j][i] * b[i])%mod;
+            if(b[j] < 0) b[j]+=mod; //remove line
+        }
 	}
-	return rank; // (multiple solutions if rank < m)
+	return rank;
 }
