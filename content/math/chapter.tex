@@ -47,6 +47,19 @@ where $r=\sqrt{a^2+b^2}, \phi=\operatorname{atan2}(b,a)$.
 	\int e^{-x^2} = \frac{\sqrt \pi}{2} \text{erf}(x) &&& \int xe^{ax}dx = \frac{e^{ax}}{a^2}(ax-1)
 \end{align*}
 
+Green's Theorem (Mostly for use in circle union):
+$$
+\oint_C P\,dx+Q\,dy=\iint_R\frac{\partial Q}{\partial y}-\frac{\partial P}{\partial x}\,dA
+$$
+
+To relate this to area, any vector field that results in $\frac{\partial Q}{\partial y}-\frac{\partial P}{\partial x}=1$ is viable. such as  $\langle P, Q\rangle$ = $\langle 0, x\rangle$. This lets us write the area as $A=\oint_C x\,dy$.
+
+Assuming above: For a single arc centered at $(c_x, c_y)$ with rad $r$ and spanning $[\theta_1, \theta_2]$:
+
+$$\oint_{C_i} x\,dy = [c_xr\sin\theta+\frac{r^2}{2}(\theta+\frac{1}{2}\sin(2\theta))]_{\theta_1}^{\theta_2}$$
+
+Be wary of: Tangential Circs, Duplicate Intersections/Circs, Nested Circs
+
 Integration by parts:
 \[\int_a^bf(x)g(x)dx = [F(x)g(x)]_a^b-\int_a^bF(x)g'(x)dx\]
 
