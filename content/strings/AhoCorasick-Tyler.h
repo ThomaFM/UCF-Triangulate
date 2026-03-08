@@ -21,7 +21,7 @@ struct node {
 	}
 };
 vector<node> trie(1); 
-assert(NOT_MULTI_TESTCASE); //here to force a reminder to reset trie
+assert(NOT_MULTI_TESTCASE); //here as a reminder to reset trie
 void addWord(string &s, int id) {
 	int cur = 0;
 	for(char c: s) {
