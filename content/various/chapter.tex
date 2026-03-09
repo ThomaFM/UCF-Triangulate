@@ -36,3 +36,26 @@
 	%\kactlimport{BumpAllocatorSTL.h}
 	% \kactlimport{Unrolling.h}
 	%\kactlimport{SIMD.h}
+
+\section{Seg tree beats}
+	The main idea behind segment tree beats is that you modify the no-cover and full-cover conditions in your update function to be more specific.
+
+	For example, let's say we want a segment tree that supports range chmin and range sum queries:
+	
+	\begin{itemize}
+		\item We store the max, count of max, strict second max, and sum per node
+		\item Our lazy value is the value we've chminned with
+		\item In the chmin query:
+		\begin{itemize}
+			\item Our no-cover condition becomes "no-cover or max $\le x$"
+			\begin{itemize}
+				\item If the max is already $\le x$, chmin isn't going to do anything; so we break early essentially
+			\end{itemize}
+			\item Our full-cover condition becomes "full-cover or second max $< x$"
+			\begin{itemize}
+				\item If the chmin value (the threshold we're pushing the values down to) is strictly between the max and second max, then we know we are setting all the max values to $x$; so we can use our count of max to update the sum for this node.
+			\end{itemize}
+			\item Both conditions are necessary for the time complexity to work.
+		\end{itemize}
+	\end{itemize}
+
