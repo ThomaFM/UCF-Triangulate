@@ -31,7 +31,7 @@ struct PST {
 		PST *n;
 		if (L <= lo && hi <= R) {
 			n = new PST(*this);
-			n->val += v;
+			n->val += v*(hi-lo);
 			n->lzadd += v;
 		} else {
 			push();
